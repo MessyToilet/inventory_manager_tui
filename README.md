@@ -1,2 +1,2 @@
 # inventory_manager_tui
-with go
+proof of concept/ test with go
