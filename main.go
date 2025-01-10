@@ -25,7 +25,7 @@ func loadInventory() {
 	// _ throwen var
 	// we keep error to kill
 	if _, err := os.Stat(inventoryFile); err == nil {
-		data, err = os.ReadFile(inventoryFile)
+		data, err := os.ReadFile(inventoryFile)
 		if err != nil {
 			log.Fatal("[!] Error in loadInventory()! - ", err)
 		}
@@ -35,7 +35,7 @@ func loadInventory() {
 
 func saveInventory() {
 	// use this for formating, pprint
-	data, err := json.Marshal(inventory, "", " ")
+	data, err := json.MarshalIndent(inventory, "", " ")
 	if err != nil {
 		log.Fatal("[!] Error in saveInventroy()! - ", err)
 	}
@@ -77,7 +77,7 @@ func main() {
 
 	itemNameInput := tview.NewInputField().SetLabel("Item Name: ")
 	itemStockInput := tview.NewInputField().SetLabel("Stock: ")
-	itemIDInput := tview.NewInputField().SetLabel("Item ID: ")
+	itemIDInput := tview.NewInputField().SetLabel("Item ID to del: ")
 
 	form := tview.NewForm().
 		AddFormItem(itemNameInput).
@@ -86,7 +86,7 @@ func main() {
 		AddButton("Add Item", func() {
 			name := itemNameInput.GetText()
 			stock := itemStockInput.GetText()
-			if name == "" && stock != "" {
+			if name != "" && stock != "" {
 				quantity, err := strconv.Atoi(stock)
 				if err != nil {
 					fmt.Fprintln(inventoryList, "[!] Invalid stock value!")
